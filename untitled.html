@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+  <title>Point of Sale System</title>
+</head>
+<body>
+  <header>
+    <h1>Ihawan Ni Kuya Kuys - POS</h1>
+    <h2>Products</h2>
+  </header>
+  <div id="pos-container">
+    <div id="product-list">
+      <!-- Product listing -->
+      <div class="product">Isaw - $10.00</div>
+      <div class="product">Dugo/Betamax - $15.00</div>
+     <div class="product">Tenga - $15.00</div>
+     <div class="product">Product 2 - $15.00</div>
+     <div class="product">Product 2 - $15.00</div>
+      
+      <!-- Add more products as needed -->
+    </div>
+    
+    <div id="cart">
+      <!-- Shopping cart -->
+      <h2>Shopping Cart</h2>
+      <ul id="cart-items">
+        <!-- Cart items will be added dynamically -->
+      </ul>
+      <div id="total">Total: $0.00</div>
+      <button id="checkout-btn">Checkout</button>
+    </div>
+  </div>
+</body>
+<style>
+*{
+  margin: 0;
+  padding: 0;
+  color:white;
+}
+body {
+  font-family: Arial, sans-serif;
+  background-color: #000000;
+}
+
+button{
+  color: black;
+}
+
+#pos-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+#product-list {
+  width: 40%;
+}
+
+.product {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+#cart {
+  width: 40%;
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+#cart-items {
+  list-style: none;
+  padding: 0;
+}
+
+#cart-items li {
+  margin-bottom: 5px;
+}
+
+#total {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+#checkout-btn {
+  margin-top: 20px;
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const productList = document.getElementById('product-list');
+  const cartItems = document.getElementById('cart-items');
+  const total = document.getElementById('total');
+  const checkoutBtn = document.getElementById('checkout-btn');
+
+  const products = [
+    { name: 'Product 1', price: 10.00 },
+    { name: 'Product 2', price: 15.00 }
+    // Add more products as needed
+  ];
+
+  // Display products
+  products.forEach(product => {
+    const productDiv = document.createElement('div');
+    productDiv.textContent = `${product.name} - $${product.price.toFixed(2)}`;
+    productDiv.classList.add('product');
+    productList.appendChild(productDiv);
+
+    productDiv.addEventListener('click', () => {
+      const cartItem = document.createElement('li');
+      cartItem.textContent = `${product.name} - $${product.price.toFixed(2)}`;
+      cartItems.appendChild(cartItem);
+
+      // Update total
+      let currentTotal = parseFloat(total.textContent.split('$')[1]);
+      currentTotal += product.price;
+      total.textContent = `Total: $${currentTotal.toFixed(2)}`;
+    });
+  });
+
+  // Checkout button event
+  checkoutBtn.addEventListener('click', () => {
+    alert('Checkout button clicked! Implement your checkout logic here.');
+  });
+});
+
+</scrpit>
+</html>
