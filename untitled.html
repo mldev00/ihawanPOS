@@ -10,17 +10,11 @@
 <body>
   <header>
     <h1>Ihawan Ni Kuya Kuys - POS</h1>
-    <h2>Products</h2>
+    <h2></h2>
   </header>
   <div id="pos-container">
     <div id="product-list">
       <!-- Product listing -->
-      <div class="product">Isaw - $10.00</div>
-      <div class="product">Dugo/Betamax - $15.00</div>
-     <div class="product">Tenga - $15.00</div>
-     <div class="product">Product 2 - $15.00</div>
-     <div class="product">Product 2 - $15.00</div>
-      
       <!-- Add more products as needed -->
     </div>
     
@@ -34,6 +28,7 @@
       <button id="checkout-btn">Checkout</button>
     </div>
   </div>
+  <div id="test"></div>
 </body>
 <style>
 *{
@@ -50,6 +45,14 @@ button{
   color: black;
 }
 
+li{
+  margin: 10px;
+  border:1px solid white;
+}
+h1{
+  border:1px solid red;
+  text-align: center;
+}
 #pos-container {
   display: flex;
   justify-content: space-between;
@@ -91,42 +94,122 @@ button{
 }
 </style>
 <script>
+const cartItems = document.getElementById('cart-items');
 document.addEventListener('DOMContentLoaded', () => {
+  
+  
   const productList = document.getElementById('product-list');
-  const cartItems = document.getElementById('cart-items');
+  
   const total = document.getElementById('total');
   const checkoutBtn = document.getElementById('checkout-btn');
+  
 
   const products = [
-    { name: 'Product 1', price: 10.00 },
-    { name: 'Product 2', price: 15.00 }
-    // Add more products as needed
+    { name: 'Isaw', price: 10.00},
+    { name: 'Dugo/Beta Max', price: 12.00 },
+    { name: 'Paa', price: 13.00 },
+    { name: 'Balunan', price: 16.00 },
+    { name: 'Atay ng Baboy', price: 18.00 },
+    { name: 'Tenga', price: 20.00 },
+    {name: 'Ulo ng Manok',price: 16.00},
+    {name: 'Pork BBQ',price: 25.00},
+    {name: 'Hotdog',price: 20.00}
   ];
-
+  
+	 
   // Display products
   products.forEach(product => {
     const productDiv = document.createElement('div');
     productDiv.textContent = `${product.name} - $${product.price.toFixed(2)}`;
     productDiv.classList.add('product');
     productList.appendChild(productDiv);
-
+	  
+var itemsqty =1;
+ 
+ 		
     productDiv.addEventListener('click', () => {
+
       const cartItem = document.createElement('li');
-      cartItem.textContent = `${product.name} - $${product.price.toFixed(2)}`;
+      
+      var cartItemsArray = cartItems.getElementsByTagName('li')
+      cartItem.name = `${product.name}`;
+
+      
+      //reduce qty and price
+      cartItem.addEventListener('click',(e)=>{
+            
+       var currentTotal = parseFloat(total.textContent.split('$')[1]);
+      
+       if(itemsqty>0){
+         itemsqty--;
+         if(itemsqty==0){
+           e.target.remove();
+           itemsqty=1;
+         }
+       }
+  
+      
+  
+        currentTotal -= product.price;
+        total.textContent = `Total: $${currentTotal.toFixed(2)}`;
+        //console.log(e)
+        //console.log(e.target.remove())
+      
+        //alert(currentTotal)
+     cartItem.textContent = `${itemsqty} ${product.name} - $${product.price.toFixed(2)}`;
+        
+          
+      });
+      
+      
+      if(cartItemsArray.length == 0){
+         cartItem.textContent = `${itemsqty} ${product.name} - $${product.price.toFixed(2)}`;
+         cartItems.appendChild(cartItem);
+   
+      }else{
+        for(var itemindex =0;itemindex<=cartItemsArray.length-1;itemindex++){
+          //console.log(cartItemsArray[itemindex].name)
+          if(cartItemsArray[itemindex].name == product.name){
+            cartItemsArray[itemindex].remove()
+            
+             itemsqty++;
+          }
+        }
+         cartItem.textContent = `${itemsqty} ${product.name} - $${product.price.toFixed(2)}`;
+            cartItems.appendChild(cartItem)
+      }
+      /*
+      cartItem.textContent = `${itemsqty} ${product.name} - $${product.price.toFixed(2)}`;
+      
+      
       cartItems.appendChild(cartItem);
+      */
+      
+     console.log(cartItemsArray)
+    
 
       // Update total
-      let currentTotal = parseFloat(total.textContent.split('$')[1]);
-      currentTotal += product.price;
+   var currentTotal = parseFloat(total.textContent.split('$')[1]);
+       currentTotal += product.price;
       total.textContent = `Total: $${currentTotal.toFixed(2)}`;
     });
   });
 
   // Checkout button event
   checkoutBtn.addEventListener('click', () => {
-    alert('Checkout button clicked! Implement your checkout logic here.');
+  //open .js file
+  //try to edit js file using fso 
+  
+  
+    //alert('Checkout button clicked! Implement your checkout logic here.');
   });
 });
 
-</scrpit>
+
+
+function log(msg){
+console.log(msg)
+}
+
+</script>
 </html>
